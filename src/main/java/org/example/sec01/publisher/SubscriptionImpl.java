@@ -5,6 +5,10 @@ import java.util.concurrent.Flow.Subscriber;
 import java.util.concurrent.Flow.Subscription;
 import java.util.logging.Logger;
 
+/**
+ * Clase que implementa la interfaz Subscription
+ * esta clase se encarga de enviar emails a un subscriber
+ */
 public class SubscriptionImpl implements Subscription {
 
     private static final Logger log = Logger.getLogger(SubscriptionImpl.class.getName());
