@@ -1,7 +1,11 @@
-package org.example.sec01.subscriber;
+package org.example.common;
 
-import java.util.concurrent.Flow.Subscription;
-import java.util.concurrent.Flow.Subscriber;
+
+import org.example.sec02.Lec03MonoSubscribe;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+import org.slf4j.LoggerFactory;
+
 import java.util.logging.Logger;
 
 
@@ -9,10 +13,16 @@ import java.util.logging.Logger;
  * Clase que implementa la interfaz Subscriber
  * esta clase se encarga de recibir emails desde un publisher, por medio de la interfaz Subscription
  */
-public class SubscriberImpl implements Subscriber<String> {
-    private static final Logger log = Logger.getLogger(SubscriberImpl.class.getName());
+public class DefaultSubscriberImpl<T> implements Subscriber<T> {
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(DefaultSubscriberImpl.class);
 
+
+    private final String name;
     private Subscription subscription;
+
+    public DefaultSubscriberImpl(String name) {
+        this.name = name;
+    }
 
     /**
      * Por medio de este metodo se recibe la subscripcion desde el publisher
@@ -21,6 +31,7 @@ public class SubscriberImpl implements Subscriber<String> {
     @Override
     public void onSubscribe(Subscription subscription) {
         this.subscription = subscription;
+        this.subscription.request(Long.MAX_VALUE);
     }
 
     /**
@@ -34,11 +45,11 @@ public class SubscriberImpl implements Subscriber<String> {
 
     /**
      * Por medio de este metodo se recibe el email desde el publisher
-     * @param email
+     * @param item
      */
     @Override
-    public void onNext(String email) {
-        log.info("Email received: " + email);
+    public void onNext(T item) {
+        log.info("{} received: {}", this.name, item);
     }
 
     /**
@@ -47,7 +58,7 @@ public class SubscriberImpl implements Subscriber<String> {
      */
     @Override
     public void onError(Throwable throwable) {
-        log.severe("ERROR: " + throwable.getMessage());
+        log.info("{} error: {}", this.name, throwable.getMessage());
     }
 
     /**
@@ -56,6 +67,6 @@ public class SubscriberImpl implements Subscriber<String> {
      */
     @Override
     public void onComplete() {
-        log.info("completed");
+        log.info("{} completed", this.name);
     }
 }

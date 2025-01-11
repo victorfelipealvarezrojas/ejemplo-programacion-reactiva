@@ -1,8 +1,9 @@
 package org.example.sec01.publisher;
 
 import com.github.javafaker.Faker;
-import java.util.concurrent.Flow.Subscriber;
-import java.util.concurrent.Flow.Subscription;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.logging.Logger;
 
 /**
