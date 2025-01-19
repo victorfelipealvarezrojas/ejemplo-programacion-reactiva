@@ -12,9 +12,11 @@ public class Lec04MonoEmptyError {
 
     private static Mono<String> getUserName(int userId){
         return switch (userId){
-            case 1 -> Mono.just("user1");
+            case 1 -> Mono.just("user1");  //Just indica el elemento a emitir
             case 2 -> Mono.empty();
             default -> Mono.error(new RuntimeException("Not found"));
         };
     }
+
+
 }

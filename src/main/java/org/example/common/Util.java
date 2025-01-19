@@ -1,9 +1,16 @@
 package org.example.common;
 
+import com.github.javafaker.Faker;
 import org.reactivestreams.Subscriber;
-import reactor.core.publisher.Mono;
+
+import java.time.Duration;
+
+import static java.lang.Thread.sleep;
 
 public class Util {
+
+    private final static Faker  faker = Faker.instance();
+
     public static <T> Subscriber<T> subscriber() {
         return new DefaultSubscriberImpl<>("");
     }
@@ -12,9 +19,16 @@ public class Util {
         return new DefaultSubscriberImpl<>(name);
     }
 
-    public static void main(String[] args) {
-        var mono = Mono.just(1);
-        mono.subscribe(subscriber("subs1"));
-        mono.subscribe(subscriber("subs2"));
+    public static Faker faker(){
+        return faker;
     }
+
+    public static void sleepSeconds(int seconds) {
+        try {
+            sleep(Duration.ofSeconds(seconds));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
